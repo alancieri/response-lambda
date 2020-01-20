@@ -1,2 +1,2 @@
-# jresponse-lambda
+# response-lambda
 Lambda Response Layer
