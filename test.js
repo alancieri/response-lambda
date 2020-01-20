@@ -22,12 +22,12 @@ const offset = limit * (page - 1)
 const queryResult = items.slice(offset, offset + limit)
 
 // Test success
-const test1 = success(queryResult,200, { stringify: false })
+const test1 = success(queryResult,200, { stringify: true })
 console.log('\n\nTest success\n', test1)
 
 // Test success using pagination
 const paging = paginate(totItems, page, limit)
-const test2 = success(queryResult, 204, options, paging)
+const test2 = success(queryResult, 201, options, paging)
 console.log('\n\nTest success using pagination\n', test2)
 
 // Test errors
