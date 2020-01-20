@@ -2,6 +2,8 @@ const httpStatus = require('http-status')
 
 const Response = {
   paginate (total, page = 1, limit = 20) {
+    page = page === null ? 1 : page
+    limit = limit === null ? 1 : limit
     let offset = limit * (page - 1)
     let paging = {
       page: page,

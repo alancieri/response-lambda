@@ -10,7 +10,7 @@ const options = {
 }
 
 let totItems = 60
-let page = 1
+let page = 2
 let limit = 20
 // *** End
 
@@ -33,7 +33,3 @@ console.log('\n\nTest success using pagination\n', test2)
 // Test errors
 const test3 = errors(['Text Error 1', 'Text Error 2'], 404, options)
 console.log('\n\nTest errors\n', test3)
-
-// Test using Response global object
-const test4 = Response.errors(['Text Error 1', 'Text Error 2'], 404, options)
-console.log('\n\nTest errors usign global object\n', test4)
