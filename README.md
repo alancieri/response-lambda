@@ -13,10 +13,9 @@ npm i response-lambda --save
 ```js
 const { success, errors, paginate, Response } = require('./index')
 success(items)
-```
 
-##### Output
-```js
+// Output 
+
 { 
   status: 'OK',
   statusCode: 200,
@@ -30,7 +29,7 @@ success(items)
      { id: 2, name: 'test2' },
      { id: 3, name: 'test3' },
      // ... 
-   ]' // body is a string (JSON.parse)
+   ]' // body is a string (JSON.parse())
 }
 ```
 
@@ -50,9 +49,8 @@ const limit = 20
 const paging = paginate(totItems, page, limit)
 success(queryResult, 201, options, paging)
 
-```
-##### Output
-```js
+// Output 
+
 { 
   status: 'CREATED',
   statusCode: 201,
@@ -81,5 +79,24 @@ success(queryResult, 201, options, paging)
 ##### Error Response
 
 ```js
-errors(['Error Message 1', 'Error Message 2'], 404)
-```
+errors(['Error Message 1', 'Error Message 2'], 404, { stringify: false })
+
+// Output
+
+{ 
+  status: 'NOT_FOUND',
+  statusCode: 404,
+  headers: { 
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Credentials': true,
+    'Content-Type': 'application/json',
+    'Custom-Header1': 'value1',
+    'Custom-Header2': 'value2' 
+  },
+  body: { 
+    errors: [ 
+      'Error Message 1', 
+      'Error Message 2' 
+    ]
+  } 
+}
