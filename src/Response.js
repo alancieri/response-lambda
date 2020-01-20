@@ -1,7 +1,7 @@
 const Response = {
   paginate (total, page = 1, limit = 20) {
-    page = page === null ? 1 : page
-    limit = limit === null ? 1 : limit
+    page = page === null ? 1 : parseInt(page)
+    limit = limit === null ? 1 : parseInt(limit)
     let offset = limit * (page - 1)
     let paging = {
       page: page,
