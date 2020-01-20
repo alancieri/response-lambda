@@ -1,5 +1,3 @@
-const httpStatus = require('http-status')
-
 const Response = {
   paginate (total, page = 1, limit = 20) {
     page = page === null ? 1 : page
@@ -64,7 +62,6 @@ const Response = {
     })
 
     let response = {
-      status: httpStatus[`${statusCode}_NAME`],
       statusCode,
       headers
     }
