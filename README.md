@@ -24,12 +24,12 @@ success(items)
      'Access-Control-Allow-Credentials': true,
      'Content-Type': 'application/json' 
   },
-  body: '[ 
+  body: [ 
      { id: 1, name: 'test1' },
      { id: 2, name: 'test2' },
      { id: 3, name: 'test3' },
      // ... 
-   ]' // body is a string (JSON.parse())
+   ] // body is a string (JSON.parse())
 }
 ```
 
