@@ -1,6 +1,6 @@
 {
   "name": "response-lambda",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Lambda Response Layer",
   "main": "index.js",
   "scripts": {

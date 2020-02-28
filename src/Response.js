@@ -35,7 +35,7 @@ const Response = {
     let headers = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': true,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json; charset=utf-8'
     }
     const _buildBody = (data, paginate) => {
       paginate.paging.results_size = data.length
