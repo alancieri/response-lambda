@@ -1,5 +1,5 @@
 const Response = {
-  paginate (total, page = 1, limit = 20) {
+  paginate(total, page = 1, limit = 20) {
     page = page === null ? 1 : parseInt(page)
     limit = limit === null ? 1 : parseInt(limit)
     let offset = limit * (page - 1)
@@ -15,17 +15,31 @@ const Response = {
 
   },
 
-  errors (errors, code = 400, ...args) {
+  errors(errors, code = 400, ...args) {
     if (!Array.isArray(errors)) { errors = [errors] }
     code = (code >= 400 && code < 500) ? code : 400
     return Response.response({ errors }, code, ...args)
   },
 
-  success (data, ...args) {
+  success(data, ...args) {
     return Response.response(data, ...args)
   },
 
-  response (data, ...args) {
+  done(data, paginate = null) {
+    const _buildBody = (data, paginate) => {
+      paginate.paging.results_size = data.length
+      return {
+        ...paginate.paging,
+        results: data
+      }
+    }
+    let response = data
+    if (paginate)
+      response = _buildBody(data, paginate)
+    return response
+  },
+
+  response(data, ...args) {
     let config = {
       stringify: true
     }
@@ -57,8 +71,8 @@ const Response = {
     let body = data
     args.map((element) => {
       if (typeof element === 'number') { statusCode = element }
-      if (typeof element === 'object' && element.hasOwnProperty('paging')) { body = _buildBody(data, element)}
-      if (typeof element === 'object') {_buildOptions(element)}
+      if (typeof element === 'object' && element.hasOwnProperty('paging')) { body = _buildBody(data, element) }
+      if (typeof element === 'object') { _buildOptions(element) }
     })
 
     let response = {
@@ -77,6 +91,7 @@ const Response = {
 module.exports = {
   Response,
   success: (data, ...args) => Response.success(data, ...args),
+  done: (data, paginate = null) => Response.done(data, paginate),
   errors: (errors, code, headers, stringify = true) => Response.errors(errors, code, headers, stringify),
   paginate: (total, page = 1, limit = 20) => Response.paginate(total, page, limit)
 }

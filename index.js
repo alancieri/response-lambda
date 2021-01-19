@@ -1,3 +1,2 @@
-const { success, errors, paginate, Response } = require('./src/Response')
-const { response, collect, ResponseSdk } = require('./src/ResponseSdk')
-module.exports = { success, errors, paginate, Response, response, collect, ResponseSdk }
+const { success, errors, paginate, Response, done } = require('./src/Response')
+module.exports = { success, done, errors, paginate, Response }

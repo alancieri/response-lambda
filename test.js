@@ -1,4 +1,4 @@
-const { success, errors, paginate, Response, response, collect, ResponseSdk } = require('./index')
+const { success, errors, paginate, Response, done } = require('./index')
 console.clear()
 
 
@@ -37,11 +37,11 @@ const test3 = errors(['Text Error 1', 'Text Error 2'], 404, options)
 console.log('\n\nTest errors\n', test3)
 
 // Test response (plain)
-const test4 = response(queryResult)
+const test4 = done(queryResult)
 console.log('\n\nTest response (plain)\n', test4)
 
 
 // Test response (plain) using collection
-const collection = collect(totItems, page, limit)
-const test5 = response(queryResult, collection)
+const collection = paginate(totItems, page, limit)
+const test5 = done(queryResult, collection)
 console.log('\n\nTest response (plain) using collection\n', test5)
