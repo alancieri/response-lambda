@@ -12,8 +12,8 @@ const options = {
 }
 
 let totItems = 60
-let page = 2
-let limit = 20
+let page = 1
+let limit = 10
 // *** End
 
 let items = []

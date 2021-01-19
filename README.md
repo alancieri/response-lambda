@@ -100,3 +100,38 @@ errors(['Error Message 1', 'Error Message 2'], 404, { stringify: false })
     ]
   } 
 }
+```
+
+##### Done Response using pagination
+Using "done" function the response will not be wrapped in a API response
+
+```js
+const { done, paginate } = require('./index')
+const page = 1
+const limit = 20
+
+const paging = paginate(totItems, page, limit)
+console.log(done(queryResult, paging))
+
+// Output 
+
+{
+  page: 1,
+  results_per_page: 10,
+  results_size: 10,
+  total_results_size: 60,
+  total_pages: 6,
+  results: [
+    { id: 1, name: 'test1' },
+    { id: 2, name: 'test2' },
+    { id: 3, name: 'test3' },
+    { id: 4, name: 'test4' },
+    { id: 5, name: 'test5' },
+    { id: 6, name: 'test6' },
+    { id: 7, name: 'test7' },
+    { id: 8, name: 'test8' },
+    { id: 9, name: 'test9' },
+    { id: 10, name: 'test10' }
+  ]
+}
+```
