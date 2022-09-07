@@ -11,11 +11,11 @@ type PagingObject = {
 };
 
 export const Response = {
-  paginate(total: number, page: number = 1, limit: number = 20) {
+  paginate(total: number, page = 1, limit = 20) {
     page = page === null ? 1 : page;
     limit = limit === null ? 1 : limit;
-    let offset = limit * (page - 1);
-    let paging: Paging = {
+    const offset = limit * (page - 1);
+    const paging: Paging = {
       page: page,
       results_per_page: limit,
       results_size: null, // data.length
@@ -25,7 +25,7 @@ export const Response = {
     return { paging, limit, offset };
   },
 
-  errors(errors: any[], code: number = 400, ...args: any[]) {
+  errors(errors: any, code = 400, ...args: any[]) {
     if (!Array.isArray(errors)) {
       errors = [errors];
     }
@@ -51,7 +51,7 @@ export const Response = {
   },
 
   response(data: any, ...args: any[]) {
-    let config = {
+    const config = {
       stringify: true,
     };
 
@@ -71,10 +71,11 @@ export const Response = {
     };
 
     const _buildOptions = (options: any | undefined) => {
-      if (options.hasOwnProperty("headers")) {
+      if (Object.prototype.hasOwnProperty.call(options, "headers")) {
         headers = { ...headers, ...options.headers };
       }
-      if (options.hasOwnProperty("stringify")) {
+
+      if (Object.prototype.hasOwnProperty.call(options, "stringify")) {
         config.stringify = options.stringify;
       }
     };
@@ -85,7 +86,11 @@ export const Response = {
       if (typeof element === "number") {
         statusCode = element;
       }
-      if (typeof element === "object" && element.hasOwnProperty("paging")) {
+
+      if (
+        typeof element === "object" &&
+        Object.prototype.hasOwnProperty.call(element, "paging")
+      ) {
         body = _buildBody(data, element);
       }
       if (typeof element === "object") {
@@ -93,7 +98,7 @@ export const Response = {
       }
     });
 
-    let response = {
+    const response = {
       statusCode,
       headers,
       body,
