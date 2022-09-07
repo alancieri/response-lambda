@@ -1,4 +1,4 @@
-const { success, errors, paginate, Response, done } = require('./index')
+const { success, errors, paginate, Response, done } = require('./dist/index')
 console.clear()
 
 
