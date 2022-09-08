@@ -33,8 +33,12 @@ const test2 = success(queryResult, 201, options, paging)
 console.log('\n\nTest success using pagination\n', test2)
 
 // Test errors
-const test3 = errors(['Text Error 1', 'Text Error 2'], 404, options)
+const test3 = errors(['Text Error 1', 'Text Error 2'])
 console.log('\n\nTest errors\n', test3)
+
+// Test errors2
+const test6 = errors('Text Error 2')
+console.log('\n\nTest errors2\n', test6)
 
 // Test response (plain)
 const test4 = done(queryResult)

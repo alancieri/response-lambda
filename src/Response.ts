@@ -1,14 +1,13 @@
-type Paging = {
-  page: number;
-  results_per_page: number;
-  results_size: number | null; // data.length
-  total_results_size: number;
-  total_pages: number;
-};
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 
-type PagingObject = {
-  paging: Paging;
-};
+import {
+  Paging,
+  PagingObject,
+  ResponseOutput,
+  ErrorsInput,
+  Arguments,
+  OptionsObject,
+} from "./types";
 
 export const Response = {
   paginate(total: number, page = 1, limit = 20) {
@@ -18,22 +17,21 @@ export const Response = {
     const paging: Paging = {
       page: page,
       results_per_page: limit,
-      results_size: null, // data.length
+      results_size: 0, // data.length
       total_results_size: total,
       total_pages: total > 0 ? Math.ceil(total / limit) : 1,
     };
     return { paging, limit, offset };
   },
 
-  errors(errors: any, code = 400, ...args: any[]) {
-    if (!Array.isArray(errors)) {
-      errors = [errors];
-    }
+  errors(errors: ErrorsInput, code = 400, ...args: Arguments[]) {
+    if (!Array.isArray(errors)) errors = [errors];
+
     code = code >= 400 && code < 500 ? code : 400;
     return Response.response({ errors }, code, ...args);
   },
 
-  success(data: any, ...args: any[]) {
+  success(data: any, ...args: Arguments[]) {
     return Response.response(data, ...args);
   },
 
@@ -50,7 +48,7 @@ export const Response = {
     return response;
   },
 
-  response(data: any, ...args: any[]) {
+  response(data: any, ...args: Arguments[]) {
     const config = {
       stringify: true,
     };
@@ -62,6 +60,7 @@ export const Response = {
       "Access-Control-Allow-Credentials": true,
       "Content-Type": "application/json; charset=utf-8",
     };
+
     const _buildBody = (data: any, paginate: PagingObject) => {
       paginate.paging.results_size = data.length;
       return {
@@ -70,7 +69,7 @@ export const Response = {
       };
     };
 
-    const _buildOptions = (options: any | undefined) => {
+    const _buildOptions = (options: OptionsObject | undefined) => {
       if (Object.prototype.hasOwnProperty.call(options, "headers")) {
         headers = { ...headers, ...options.headers };
       }
@@ -86,27 +85,24 @@ export const Response = {
       if (typeof element === "number") {
         statusCode = element;
       }
-
       if (
         typeof element === "object" &&
         Object.prototype.hasOwnProperty.call(element, "paging")
       ) {
-        body = _buildBody(data, element);
+        body = _buildBody(data, element as PagingObject);
       }
       if (typeof element === "object") {
-        _buildOptions(element);
+        _buildOptions(element as OptionsObject);
       }
     });
 
-    const response = {
+    const response: ResponseOutput = {
       statusCode,
       headers,
-      body,
     };
 
-    if (statusCode !== 204) {
+    if (statusCode !== 204)
       response.body = config.stringify ? JSON.stringify(body) : body;
-    }
 
     return response;
   },
@@ -118,14 +114,11 @@ export function success(data: any, ...args: any[]) {
 export function done(data: any, paginate = null) {
   return Response.done(data, paginate);
 }
-export function errors(
-  errors: any,
-  code: number,
-  headers: any,
-  stringify = true
-) {
-  return Response.errors(errors, code, headers, stringify);
+
+export function errors(errors: ErrorsInput, code = 400, ...args: any[]) {
+  return Response.errors(errors, code, ...args);
 }
-export function paginate(total: any, page = 1, limit = 20) {
+
+export function paginate(total: number, page = 1, limit = 20) {
   Response.paginate(total, page, limit);
 }
